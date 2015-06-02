@@ -74,6 +74,110 @@ public:
 	}
 };
 
+class Min : public Formula
+{
+private:
+	Formula *x, *y;
+public:
+	Min(Formula* a, Formula* b)
+	{
+		x=a;
+		y=b;
+	}
+
+	int value(Formula* x, Formula* y)
+	{
+		if (x->value() < y->value())
+		{
+			return x->value();
+		}
+		return y->value();
+	}
+
+	~Min()
+	{
+		delete x;
+		delete y;
+	}
+};
+
+class Max : public Formula
+{
+private:
+	Formula *x, *y;
+public:
+	Max(Formula* a, Formula* b)
+	{
+		x=a;
+		y=b;
+	}
+
+	int value(Formula* x, Formula* y)
+	{
+		if (x->value() > y->value())
+		{
+			return x->value();
+		}
+		return y->value();
+	}
+
+	~Max()
+	{
+		delete x;
+		delete y;
+	}
+};
+
+class LessThan : public Formula
+{
+private:
+	Formula *x, *y;
+public:
+	LessThan(Formula* a, Formula* b)
+	{
+		x=a;
+		y=b;
+	}
+
+	int value()
+	{
+		if(x->value() < y->value()) return 1;
+		return 0;
+	}
+
+	~LessThan()
+	{
+		delete x;
+		delete y;
+	}
+	
+};
+
+class GreaterThan : public Formula
+{
+private:
+	Formula *x, *y;
+public:
+	GreaterThan(Formula* a, Formula* b)
+	{
+		x=a;
+		y=b;
+	}
+
+	int value()
+	{
+		if(x->value() > y->value()) return 1;
+		return 0;
+	}
+
+	~GreaterThan()
+	{
+		delete x;
+		delete y;
+	}
+	
+};
+
 Formula* parse()
 {
 	char c = cin.get();
@@ -91,6 +195,38 @@ Formula* parse()
 		return new Sum (leftOperand, rightOperand);
 	}
 
+	if (c == 'M')
+	{
+		Formula *leftOperand = parse();
+		Formula *rightOperand = parse();
+
+		//return new Max (leftOperand, rightOperand);
+	}
+
+	if (c == 'm')
+	{
+		Formula *leftOperand = parse();
+		Formula *rightOperand = parse();
+
+		return new Min (leftOperand, rightOperand);
+	}
+
+	if (c == '<')
+	{
+		Formula *leftOperand = parse();
+		Formula *rightOperand = parse();
+
+		return new LessThan (leftOperand, rightOperand);
+	}
+
+	if (c == '>')
+	{
+		Formula *leftOperand = parse();
+		Formula *rightOperand = parse();
+
+		return new GreaterThan (leftOperand, rightOperand);
+	}
+
 	if (c == '*')
 	{
 		Formula *leftOperand = parse();
@@ -105,14 +241,13 @@ Formula* parse()
 
 int main ()
 {
+	cout<<endl;
 
-	Formula *f = new Sum (new Product 
-		     					(new Id (2), new Id (4)),
-		     			  new Sum 
-		     			        (new Id (5), new Id (7)));
+	Formula* parsedTree = parse(); 
 
-	Formula* parsedTree = new 
+	cout<<"=======================\n";
 
-	cout << "Value=" << f->value()<<endl;
+	cout<<"Parsed tree value: "<<parsedTree->value()<<endl;
 
+	return 0;
 }
