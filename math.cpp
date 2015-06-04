@@ -85,7 +85,7 @@ public:
 		y=b;
 	}
 
-	int value(Formula* x, Formula* y)
+	int value()
 	{
 		if (x->value() < y->value())
 		{
@@ -112,7 +112,7 @@ public:
 		y=b;
 	}
 
-	int value(Formula* x, Formula* y)
+	int value()
 	{
 		if (x->value() > y->value())
 		{
@@ -200,7 +200,7 @@ Formula* parse()
 		Formula *leftOperand = parse();
 		Formula *rightOperand = parse();
 
-		//return new Max (leftOperand, rightOperand);
+		return new Max (leftOperand, rightOperand);
 	}
 
 	if (c == 'm')
