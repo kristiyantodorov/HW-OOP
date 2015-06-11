@@ -179,6 +179,7 @@ public:
         int dmg;
         while((good->get_health()>0) && (bad->get_health()	>0))
         {
+        	cin.get();	
             if(turn)
             {
             	cout<<bad->get_name()<<" attacks!\n";
@@ -209,7 +210,7 @@ public:
 
 int main()
 {
-	srand(time(NULL));
+	srand(20);
 
 	Wizard b;
 
